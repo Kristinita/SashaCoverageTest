@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.6.4"
+install:
+  - pip install flake8
+  - pip install python-coveralls
+script:
+  - python flake8 .
+after_success:
+  # http://levibostian.com/blog/python-code-coverage-and-coveralls-io/
+  - coveralls
