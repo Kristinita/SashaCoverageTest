@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# @Author: SashaChernykh
+# @Date: 2018-01-22 08:41:23
+# @Last Modified time: 2018-01-22 09:55:37
 """A setuptools based setup module.
 
 See:
@@ -6,8 +10,7 @@ https://github.com/pypa/sampleproject
 """
 
 # Always prefer setuptools over distutils
-from setuptools import find_packages
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # For Markdown README
 # https://stackoverflow.com/a/26737672/5951529

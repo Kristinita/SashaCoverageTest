@@ -1,0 +1,13 @@
+strictness: medium
+doc-warnings: true
+test-warnings: true
+max-line-length: 120
+dodgy:
+  run: true
+vulture:
+  run: true
+pyroma:
+  run: true
+pep257:
+  disable:
+    - D213
