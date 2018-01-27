@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: SashaChernykh
 # @Date: 2018-01-26 10:06:04
-# @Last Modified time: 2018-01-26 17:32:21
+# @Last Modified time: 2018-01-27 07:40:52
 """Check files for correct head metadata.
 
 Check, that files contains «Описание пакета:», «Процесс тренировки:» and so on.
@@ -15,7 +15,7 @@ import os
 from pyfancy.pyfancy import pyfancy
 
 from erichek.eric_config import ALL_TXT_IN_ERIC_ROOM_WIHTOUT_SUBFOLDERS
-LOG = logbook.Logger("eric_asterisks logbook")
+LOG = logbook.Logger("eric_head logbook")
 
 HEAD_DATA = True
 
@@ -72,9 +72,11 @@ def eric_head_function():
 
         filename_without_path = os.path.basename(filename)
 
+        # File content in folder
+        each_file_in_folder = open(filename, encoding='windows-1251').read()
+
         # Find head data
-        if 'Описание пакета:' in open(
-                filename, encoding='windows-1251').read():
+        if 'Описание пакета:' in each_file_in_folder:
             LOG.debug(
                 '«Описание пакета:» contains in ' +
                 filename_without_path)
@@ -85,8 +87,7 @@ def eric_head_function():
             global DESCRIPTION_FAILURE_TESTS
             DESCRIPTION_FAILURE_TESTS = False
 
-        if 'Процесс тренировки:' in open(
-                filename, encoding='windows-1251').read():
+        if 'Процесс тренировки:' in each_file_in_folder:
             LOG.debug(
                 '«Процесс тренировки:» contains in ' +
                 filename_without_path)
@@ -97,8 +98,7 @@ def eric_head_function():
             global TRAINING_PROCESS_FAILURE_TESTS
             TRAINING_PROCESS_FAILURE_TESTS = False
 
-        if 'Пример вопроса 1:' in open(
-                filename, encoding='windows-1251').read():
+        if 'Пример вопроса 1:' in each_file_in_folder:
             LOG.debug(
                 '«Пример вопроса 1:» contains in ' +
                 filename_without_path)
@@ -109,8 +109,7 @@ def eric_head_function():
             global FIRST_EXAMPLE_FAILURE_TESTS
             FIRST_EXAMPLE_FAILURE_TESTS = False
 
-        if 'Ответ к примеру вопроса 1:' in open(
-                filename, encoding='windows-1251').read():
+        if 'Ответ к примеру вопроса 1:' in each_file_in_folder:
             LOG.debug(
                 '«Ответ к примеру вопроса 1:» contains in ' +
                 filename_without_path)
@@ -121,8 +120,7 @@ def eric_head_function():
             global FIRST_ANSWER_FAILURE_TESTS
             FIRST_ANSWER_FAILURE_TESTS = False
 
-        if 'Пример вопроса 2:' in open(
-                filename, encoding='windows-1251').read():
+        if 'Пример вопроса 2:' in each_file_in_folder:
             LOG.debug(
                 '«Пример вопроса 2:» contains in ' +
                 filename_without_path)
@@ -133,8 +131,7 @@ def eric_head_function():
             global SECOND_EXAMPLE_FAILURE_TESTS
             SECOND_EXAMPLE_FAILURE_TESTS = False
 
-        if 'Ответ к примеру вопроса 2:' in open(
-                filename, encoding='windows-1251').read():
+        if 'Ответ к примеру вопроса 2:' in each_file_in_folder:
             LOG.debug(
                 '«Ответ к примеру вопроса 2:» contains in ' +
                 filename_without_path)
@@ -145,7 +142,7 @@ def eric_head_function():
             global SECOND_ANSWER_FAILURE_TESTS
             SECOND_ANSWER_FAILURE_TESTS = False
 
-        if 'Источник(и):' in open(filename, encoding='windows-1251').read():
+        if 'Источник(и):' in each_file_in_folder:
             LOG.debug(
                 '«Источник(и):» contains in ' +
                 filename_without_path)
@@ -156,8 +153,7 @@ def eric_head_function():
             global PROOFS_FAILURE_TESTS
             PROOFS_FAILURE_TESTS = False
 
-        if 'Автор(ы), редакторы и рецензенты (если есть) материалов источника(ов):' in open(
-                filename, encoding='windows-1251').read():
+        if 'Автор(ы), редакторы и рецензенты (если есть) материалов источника(ов):' in each_file_in_folder:
             LOG.debug(
                 '«Автор(ы), редакторы и рецензенты (если есть) материалов источника(ов):» contains in ' +
                 filename_without_path)
@@ -168,8 +164,7 @@ def eric_head_function():
             global AUTHORS_FAILURE_TESTS
             AUTHORS_FAILURE_TESTS = False
 
-        if 'Ссылка(и) на источник(и):' in open(
-                filename, encoding='windows-1251').read():
+        if 'Ссылка(и) на источник(и):' in each_file_in_folder:
             LOG.debug(
                 '«Ссылка(и) на источник(и):» contains in ' +
                 filename_without_path)
@@ -180,8 +175,7 @@ def eric_head_function():
             global LINK_FAILURE_TESTS
             LINK_FAILURE_TESTS = False
 
-        if 'Постоянный адрес пакета:' in open(
-                filename, encoding='windows-1251').read():
+        if 'Постоянный адрес пакета:' in each_file_in_folder:
             LOG.debug(
                 '«Постоянный адрес пакета:» contains in ' +
                 filename_without_path)
