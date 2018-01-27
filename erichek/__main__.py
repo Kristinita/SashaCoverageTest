@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: SashaChernykh
 # @Date: 2018-01-22 07:32:05
-# @Last Modified time: 2018-01-26 10:54:04
+# @Last Modified time: 2018-01-26 17:24:56
 """Run tests.
 
 Main file for running Erichek tests.
@@ -37,10 +37,29 @@ from pyfancy.pyfancy import pyfancy
 # strip colors if stdout is redirected
 # init(strip=not sys.stdout.isatty())
 
-from erichek.eric_config import green_foreground
+LOG = logbook.Logger("summary logbook")
 
-log = logbook.Logger("summary logbook")
-green_foreground(log)
+
+def red_foreground(redtext):
+    """Red foreground for error messages.
+
+    Red foreground for error messages.
+
+    Arguments:
+        redtext {str} -- text, which will be colored in red.
+    """
+    LOG.error(pyfancy().red().bold(redtext))
+
+
+def green_foreground(greentext):
+    """Green foreground for notice messages.
+
+    Green foreground for error messages.
+
+    Arguments:
+        greentext {str} -- text, which will be colored in green.
+    """
+    LOG.notice(pyfancy().green().bold(greentext))
 
 
 def main():
@@ -65,8 +84,8 @@ def main():
         # cprint(figlet_format('\nSuccess', font='starwars'),
         # 'white', 'on_green', attrs=['bold'])
     else:
-        log.error(pyfancy().red().bold(
-            "You have errors in your packages. Please, fix them."))
+        red_foreground(
+            "You have errors in your packages. Please, fix them.")
         # cprint(figlet_format('\nFailure', font='starwars'),
         # 'yellow', 'on_red', attrs=['bold'])
         exit(1)

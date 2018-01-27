@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: SashaChernykh
 # @Date: 2018-01-22 18:30:38
-# @Last Modified time: 2018-01-22 19:58:05
+# @Last Modified time: 2018-01-26 17:31:55
 """Encoding checker.
 
 Check, that files in Windows-1251 encoding.
@@ -28,8 +28,30 @@ LOG = logbook.Logger("eric_encoding logbook")
 ENCODING_WINDOWS_1251 = True
 
 
+def red_background(redtext):
+    """Red foreground for error messages.
+
+    Red foreground for error messages.
+
+    Arguments:
+        redtext {str} -- text, which will be colored in red.
+    """
+    LOG.error(pyfancy().red_bg().bold(redtext))
+
+
+def green_foreground(greentext):
+    """Green foreground for notice messages.
+
+    Green foreground for error messages.
+
+    Arguments:
+        greentext {str} -- text, which will be colored in green.
+    """
+    LOG.notice(pyfancy().green().bold(greentext))
+
+
 def eric_encoding_function():
-    """Check encoding of the file:
+    """Check encoding of the file.
 
     chardet check, that each file in Windows-1251.
     MacCyrillic — also true.
@@ -69,27 +91,26 @@ def eric_encoding_function():
             with codecs.open(filename, "w", "windows-1251") as file_for_conversion:
                 if read_file_for_conversion:
                     file_for_conversion.write(read_file_for_conversion)
-            LOG.critical(pyfancy().red_bg().bold(filename_without_path +
-                                                 " in " +
-                                                 fileencoding +
-                                                 ", not in Windows-1251 encoding! Please, save " +
-                                                 filename_without_path + " in Windows-1251 encoding."))
-            LOG.notice(pyfancy().green().bold("If encoding of file " + filename_without_path +
-                                              " is UTF-8 and you see message above in local wwtd testing, " +
-                                              filename_without_path +
-                                              " automatically will converted from UTF-8 to Windows-1251."))
+            red_background(filename_without_path +
+                           " in " +
+                           fileencoding +
+                           ", not in Windows-1251 encoding! Please, save " +
+                           filename_without_path + " in Windows-1251 encoding.")
+            green_foreground("If encoding of file " + filename_without_path +
+                             " is UTF-8 and you see message above in local wwtd testing, " +
+                             filename_without_path +
+                             " automatically will converted from UTF-8 to Windows-1251.")
             global ENCODING_WINDOWS_1251
             ENCODING_WINDOWS_1251 = False
 
 
 def eric_encoding_summary():
     """Report, all files in Windows-1251 or no."""
-
     eric_encoding_function()
     if ENCODING_WINDOWS_1251:
-        LOG.notice(pyfancy().green().bold(
-            "All files in Windows-1251 encoding"))
+        green_foreground(
+            "All files in Windows-1251 encoding")
 
     if not ENCODING_WINDOWS_1251:
-        LOG.critical(pyfancy().red_bg().bold(
-            "One or more your files not in Windows-1251 encoding. Please, convert it (them) to Windows-1251."))
+        red_background(
+            "One or more your files not in Windows-1251 encoding. Please, convert it (them) to Windows-1251.")

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: Kristinita
 # @Date: 2018-01-02 08:35:59
-# @Last Modified time: 2018-01-23 19:43:18
+# @Last Modified time: 2018-01-26 17:30:14
 # For pydocstyle:
 # D301: Use r""", if any backslashes in a docstring
 r"""Patorjk-HeX ASCII-art font.
@@ -32,16 +32,12 @@ import glob
 import logbook
 import sys
 
-from pyfancy.pyfancy import pyfancy
-
 # Get all .txt file in a directory
 # https://stackoverflow.com/a/3964689/5951529
 # «glob.glob('../*.txt')» in parent folder, not «glob.glob('../*.txt')»!
 ALL_TXT_IN_ERIC_ROOM_WIHTOUT_SUBFOLDERS = glob.glob('./*.txt')
 
 VERSION = "0.1"
-
-log = logbook.Logger("eric_config logbook")
 
 
 def version():
@@ -90,7 +86,3 @@ def clize_log_level(*, logbook_level: 'll'="NOTICE"):
     else:
         logbook.StreamHandler(sys.stdout,
                               level=logbook.NOTICE).push_application()
-
-
-def green_foreground(coloredtext):
-    log.notice(pyfancy().green().bold(coloredtext))

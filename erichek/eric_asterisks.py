@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: SashaChernykh
 # @Date: 2018-01-22 19:58:48
-# @Last Modified time: 2018-01-26 10:54:10
+# @Last Modified time: 2018-01-26 17:31:27
 """Asterisks Checker.
 
 Check, if asterisks contains in each line of package for Eric room.
@@ -26,7 +26,30 @@ LOG = logbook.Logger("eric_asterisks logbook")
 ASTERISKS_EXISTS = True
 
 
+def red_foreground(redtext):
+    """Red foreground for error messages.
+
+    Red foreground for error messages.
+
+    Arguments:
+        redtext {str} -- text, which will be colored in red.
+    """
+    LOG.error(pyfancy().red().bold(redtext))
+
+
+def green_foreground(greentext):
+    """Green foreground for notice messages.
+
+    Green foreground for error messages.
+
+    Arguments:
+        greentext {str} -- text, which will be colored in green.
+    """
+    LOG.notice(pyfancy().green().bold(greentext))
+
+
 def eric_asterisks_function():
+    """Check, contains asterisks in each line of a file, or no."""
     for filename in ALL_TXT_IN_ERIC_ROOM_WIHTOUT_SUBFOLDERS:
 
         filename_without_path = os.path.basename(filename)
@@ -43,10 +66,10 @@ def eric_asterisks_function():
                 list_without_lines_with_body = submit_file_as_list[
                     get_lines_with_body + 1:]
             except ValueError:
-                LOG.error(pyfancy().red().bold("If you see this message and, possibly, long output after them, "
-                                               "your file " + filename_without_path + " not contains <body>. "
-                                               "Please, add <body> to " + filename_without_path + " to correct place "
-                                               "and rerun tests."))
+                red_foreground("If you see this message and, possibly, long output after them, "
+                               "your file " + filename_without_path + " not contains <body>. "
+                               "Please, add <body> to " + filename_without_path + " to correct place "
+                               "and rerun tests.")
                 # Check, that asterisks contains in full file
                 list_without_lines_with_body = submit_file_as_list
 
@@ -75,19 +98,20 @@ def eric_asterisks_function():
                 # https://stackoverflow.com/a/13207725/5951529
                 lines_without_asterisks_and_n_as_strings = str(
                     lines_without_asterisks_and_n)[1:-1]
-                LOG.error(pyfancy().red().bold("This line(s) not contains asterisks: " +
-                                               lines_without_asterisks_and_n_as_strings +
-                                               " in " +
-                                               filename_without_path))
+                red_foreground("This line(s) not contains asterisks: " +
+                               lines_without_asterisks_and_n_as_strings +
+                               " in " +
+                               filename_without_path)
                 global ASTERISKS_EXISTS
                 ASTERISKS_EXISTS = False
 
 
 def eric_asterisks_summary():
+    """Report, contains asterisks in all files or no."""
     eric_asterisks_function()
     if ASTERISKS_EXISTS:
-        LOG.notice(pyfancy().green().bold("All needest lines contains asterisks"))
+        green_foreground("All needest lines contains asterisks")
 
     if not ASTERISKS_EXISTS:
-        LOG.error(pyfancy().red().bold(
-            "One or more your files not contained asterisks. Please, correct your package."))
+        red_foreground(
+            "One or more your files not contained asterisks. Please, correct your package.")

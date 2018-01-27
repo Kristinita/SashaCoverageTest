@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: SashaChernykh
 # @Date: 2018-01-26 10:06:04
-# @Last Modified time: 2018-01-26 14:47:17
+# @Last Modified time: 2018-01-26 17:32:21
 """Check files for correct head metadata.
 
 Check, that files contains «Описание пакета:», «Процесс тренировки:» and so on.
@@ -194,7 +194,7 @@ def eric_head_function():
 
 
 def eric_head_summary():
-    """Report, contains head data in all files or no"""
+    """Report, contains head data in all files or no."""
     eric_head_function()
 
     if all([DESCRIPTION_FAILURE_TESTS, TRAINING_PROCESS_FAILURE_TESTS, FIRST_EXAMPLE_FAILURE_TESTS,

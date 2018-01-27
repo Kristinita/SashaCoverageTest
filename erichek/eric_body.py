@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: SashaChernykh
 # @Date: 2018-01-22 07:23:52
-# @Last Modified time: 2018-01-22 18:45:58
+# @Last Modified time: 2018-01-26 17:23:32
 """Check files for body.
 
 Check, contains files of directory <body> or no.
@@ -22,6 +22,28 @@ LOG = logbook.Logger("eric_body logbook")
 BODY_EXIST = True
 
 
+def red_foreground(redtext):
+    """Red foreground for error messages.
+
+    Red foreground for error messages.
+
+    Arguments:
+        redtext {str} -- text, which will be colored in red.
+    """
+    LOG.error(pyfancy().red().bold(redtext))
+
+
+def green_foreground(greentext):
+    """Green foreground for notice messages.
+
+    Green foreground for error messages.
+
+    Arguments:
+        greentext {str} -- text, which will be colored in green.
+    """
+    LOG.notice(pyfancy().green().bold(greentext))
+
+
 def eric_body_function():
     """Check, contains body in a file, or no."""
     # Get list all filenames in a directory
@@ -40,12 +62,12 @@ def eric_body_function():
             LOG.debug(filename_without_path + " contains <body>")
 
         else:
-            LOG.error(pyfancy().red().bold(
+            red_foreground(
                 "File " +
                 filename_without_path +
                 " not contain <body>. Please, add <body> in " +
                 filename_without_path +
-                "."))
+                ".")
             global BODY_EXIST
             BODY_EXIST = False
 
@@ -57,9 +79,9 @@ def eric_body_summary():
     """
     eric_body_function()
     if BODY_EXIST:
-        LOG.notice(pyfancy().green().bold(
-            "All files contains <body>"))
+        green_foreground(
+            "All files contains <body>")
 
     if not BODY_EXIST:
-        LOG.error(pyfancy().red().bold(
-            "Not all files contains <body>. Please, correct it."))
+        red_foreground(
+            "Not all files contains <body>. Please, correct it.")
